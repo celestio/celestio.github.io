@@ -1,0 +1,16 @@
+<html>
+
+<link rel="stylesheet" type="text/css" href="celesti.css">
+<canvas id="Canvas"></canvas>
+
+<script>
+	var c = document.getElementById("Canvas");
+	var ctx = c.getContext("2d");
+	ctx.canvas.width  = window.innerWidth - 250 ;
+  	ctx.canvas.height = window.innerHeight;
+	ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	ctx.fillStyle = "red";
+	ctx.fill();
+</script>
+
+</html>
