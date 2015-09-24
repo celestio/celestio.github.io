@@ -1,4 +1,4 @@
-function draw{
+function draw() {
   var c = document.getElementById("SideBar");
   var ctx = c.getContext("2d");
   ctx.canvas.height = window.innerHeight;
