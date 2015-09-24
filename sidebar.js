@@ -6,3 +6,5 @@ function draw{
   ctx.fillStyle = "#FF0000";
   ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 }
+
+draw();
