@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 (function() {
     var canvas = document.getElementById('SideBar'),
-    	context = canvas.getContext('2d');
-
+        context = canvas.getContext('2d');
+        
     window.addEventListener('resize', resizeCanvas, false);
     
     function resizeCanvas() {
@@ -16,16 +15,5 @@
     function reDraw()
     { 
     }
-})();
-=======
-function draw() {
-  var c = document.getElementById("SideBar");
-  var ctx = c.getContext("2d");
-  ctx.canvas.height = window.innerHeight;
-  ctx.canvas.width = 300;
-  ctx.fillStyle = "#FF0000";
-  ctx.fillRect(0, 0, 300, window.innerHeight);
-}
 
-draw();
->>>>>>> origin/master
+})();
