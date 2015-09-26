@@ -1,11 +1,11 @@
 (function() {
-    var canvas = document.getElementById('SideBar'),
-    	context = canvas.getContext('2d');
-
+    var canvas = document.getElementById('Map'),
+        context = canvas.getContext('2d');
+        
     window.addEventListener('resize', resizeCanvas, false);
     
     function resizeCanvas() {
-        canvas.width = 250;
+        canvas.width = window.innerWidth - 250;
         canvas.height = window.innerHeight;
         reDraw(); 
     }
@@ -15,4 +15,5 @@
     function reDraw()
     { 
     }
+
 })();

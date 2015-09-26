@@ -1,12 +1,26 @@
 body{
-
 	margin-top: 0px;
     margin-bottom: 0px;
     margin-right: 0px;
     margin-left: 0px;
+/*    position: fixed; 
+    overflow-y: scroll;
+    width: 100%;*/
 }
 
-#Sidebar{
-	height: 100%;
-	width: 400px;
+#SideBar{
+	background: #F8F8F2
 }
+
+#Map{
+	background: #272822
+}
+
+#section1{
+	float:left;
+}
+
+#section2{
+	float:left;
+}
+
