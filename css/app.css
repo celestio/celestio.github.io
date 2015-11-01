@@ -1,0 +1,93 @@
+html{
+    overflow: hidden;
+}
+
+h1{
+    color: #F8F8F2;
+    font-size: 30px;
+    margin-left: 10px;
+    font-family: courier;
+}
+
+p{
+    color: #F8F8F2;
+    font-size: 14px;
+    margin-left: 10px;
+    font-family: courier;
+}
+
+.sidebar {
+    background-color: #272822;
+    position: absolute;
+    left: 0; 
+    top: 0px; 
+    bottom: 0;
+    width: 250px;
+}
+
+.main {
+    position: absolute;
+    left: 250px; 
+    top: 0px; 
+    right: 0; 
+    bottom: 0;
+    background: white;
+}
+
+.timeControl button{
+    position: relative;
+    float: left;
+    width: 44px;
+    height: 30px;
+    margin-left: 5px;
+    background-color: #75715E;
+    color: #F8F8F2;
+    padding: 0;
+    border: none;
+    font-family: courier;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    background-color: #75715E;
+    width: 240px;
+    height: 20px;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    margin-left: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: #272822;
+    opacity: 0.5;
+    width: 10px;
+    height: 20px;
+    margin-top: 0px;
+}
+
+input[type="text"] {
+    width: 240px;
+    height: 20px;
+    margin-left: 5px;
+    background-color: #F8F8F2;
+    color: #272822;
+    border: none;
+}
+
+:focus{
+    outline-color: #F92672;    
+}
+
+.item {
+  cursor: pointer;
+}
+.bold {
+  font-weight: bold;
+}
+
+ul {
+  padding-left: 1em;
+  line-height: 1.5em;
+  list-style-type: dot;
+}
