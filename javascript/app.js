@@ -8,14 +8,17 @@ var graph = document.getElementById("date");
 var ctx = canvas.getContext("2d");
 
 var pixl = ctx.createImageData(1,1);
-var d  = pixl.data;   
-
+var d  = pixl.data;  
 var curve = []
-for(x = -15; x < 15; x = x + 0.005){
-	curve.push([x*25,100*eval(graph.value),-10])
-}
-for(x = -15; x < 15; x = x + 0.005){
-	curve.push([x*25,100*eval(graph.value),10])
+
+function curveGen(){
+	curve = []
+	for(x = -15; x < 15; x = x + 0.005){
+		curve.push([x*25,100*eval(graph.value),-10])
+	}
+	for(x = -15; x < 15; x = x + 0.005){
+		curve.push([x*25,100*eval(graph.value),10])
+	}
 }
 
 
