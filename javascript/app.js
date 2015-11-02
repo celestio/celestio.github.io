@@ -4,7 +4,7 @@ var canvas = document.getElementById("map");
 var xslider = document.getElementById("xSlider");
 var yslider = document.getElementById("ySlider");
 var zslider = document.getElementById("zSlider");
-var graph = document.getElementById("date")
+var graph = document.getElementById("date");
 var ctx = canvas.getContext("2d");
 
 var pixl = ctx.createImageData(1,1);
