@@ -23,12 +23,14 @@ var pluto = {meanDistance:39.48168677, eccentricity:0.24880766 , inclination:17.
 
 planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, pluto]
 
-function refreshCurve(){
-	curve = []
+function refreshMap(){
+	map = []
 	for(p = 0; p < planets.length; ++p){
+		curve = []
 		for(x = 0; x < 365*earth.meanLongitudeCoef/planets[p].meanLongitudeCoef; x = x + 5 * planets[p].meanDistance^2){
 			curve.push(getPosition(planets[p], x))
 		}
+		map.push(curve)
 	}
 	rescaleCanvas()
 }
@@ -89,6 +91,19 @@ function drawSeries(series, colour){
 	b = colour[2];
 	a = colour[3]/255;
 
+	for(curve = 0; curve < series.length(); ++curve){
+		
+		var point = series[curve].length;
+		
+		ctx.beginPath();
+		ctx.strokeStyle="rgba("+r+","+g+","+b+","+a+")";
+		ctx.moveTo(20,20);
+		while(--point){
+			point = series[curve][point]
+			ctx.lineTo(point[0], point[1])
+		}
+		ctx.stroke(); 
+	}
 	
 	var point = series.length;
 	while(point--){
