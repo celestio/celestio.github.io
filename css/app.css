@@ -16,6 +16,10 @@ p{
     font-family: courier;
 }
 
+#map {
+    background-color: #104B5E;
+}
+
 .sidebar {
     background-color: #272822;
     position: absolute;
