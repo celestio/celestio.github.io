@@ -104,12 +104,6 @@ function drawSeries(series, colour){
 		}
 		ctx.stroke(); 
 	}
-	
-	var point = series.length;
-	while(point--){
-		ctx.fillStyle = "rgba("+r+","+g+","+b+","+a+")";
-		ctx.fillRect(series[point][0] + midx, series[point][1] + midy, 1, 1 );
-	}
 }
 
 function getPosition(orbit, days){
