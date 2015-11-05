@@ -100,7 +100,7 @@ function drawSeries(map, colour){
 		ctx.moveTo(20,20);
 		
 		while(--point){
-			ctx.lineTo(map[series][point][0], map[series][point][1])
+			ctx.lineTo(map[series][point][0] + midx, map[series][point][1] + midy)
 		}
 		ctx.stroke();
 	}
