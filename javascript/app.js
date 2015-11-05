@@ -9,7 +9,7 @@ var ctx = canvas.getContext("2d");
 
 var pixl = ctx.createImageData(1,1);
 var d  = pixl.data;  
-var curve = []
+var series = []
 
 var mercury = {meanDistance:0.38709893, eccentricity:0.20563069, inclination:7.00487, longitudeOfAscending:48.33167, longitudeOfPerigee:77.45645, meanLongitude:252.25084, meanLongitudeCoef:538101628.29}
 var venus = {meanDistance:0.72333199, eccentricity:0.00677323, inclination:3.39471, longitudeOfAscending:76.68069, longitudeOfPerigee:131.53298, meanLongitude:181.97973, meanLongitudeCoef:210664136.06}
@@ -43,7 +43,7 @@ function rescaleCanvas(){
 	canvas.height = window.innerHeight;
 	canvas.width = window.innerWidth - 250;
 	var start = new Date().getTime();
-	var x = transform(curve,xslider.value,yslider.value,zslider.value)
+	var x = transform(series,xslider.value,yslider.value,zslider.value)
 	drawSeries(x, [255,255,255,255]);     
 	var end = new Date().getTime();
 	console.log(end - start)
@@ -68,17 +68,20 @@ function transform(series, xr, yr, zr){
 	var g = sinz*sinx - siny*cosz*cosx;
 	var h = cosx*siny*sinz + cosz*sinx;
 	var i = cosx*cosy;
-
-	for(point = 0, len = series.length; point < len; ++point){
-		x = series[point][0];
-		y = series[point][1];
-		z = series[point][2];
-		transformed.push(
-		[x * a + y * b + z * c,
-		 x * d + y * e + z * f,
-		 x * g + y * h + z * i]);
+	for(curve == 0; curve < series.length; curve++){
+		transformedCurve = []
+		for(point = 0, len = curve.length; point < len; ++point){
+			x = curve[point][0];
+			y = curve[point][1];
+			z = curve[point][2];
+			transformedCurve.push(
+			[x * a + y * b + z * c,
+			 x * d + y * e + z * f,
+			 x * g + y * h + z * i]);
+			 
+		}
+		transformed.push(transformedCurve)
 	}
-
 	return transformed;
 }
 
