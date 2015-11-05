@@ -35,7 +35,7 @@ function refreshMap(){
 	rescaleCanvas()
 }
 
-refreshCurve()
+refreshMap()
 
 function rescaleCanvas(){
 	canvas.style.height = window.innerHeight;
