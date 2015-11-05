@@ -24,13 +24,13 @@ var pluto = {meanDistance:39.48168677, eccentricity:0.24880766 , inclination:17.
 planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, pluto]
 
 function refreshMap(){
-	map = []
+	series = []
 	for(p = 0; p < planets.length; ++p){
 		curve = []
 		for(x = 0; x < 365*earth.meanLongitudeCoef/planets[p].meanLongitudeCoef; x = x + 5 * planets[p].meanDistance^2){
 			curve.push(getPosition(planets[p], x))
 		}
-		map.push(curve)
+		series.push(curve)
 	}
 	rescaleCanvas()
 }
@@ -82,7 +82,7 @@ function transform(series, xr, yr, zr){
 	return transformed;
 }
 
-function drawSeries(series, colour){
+function drawSeries(map, colour){
 	var midx = Math.floor((canvas.width)/2);
 	var midy = Math.floor(canvas.height/2);
 
@@ -91,65 +91,72 @@ function drawSeries(series, colour){
 	b = colour[2];
 	a = colour[3]/255;
 
-	for(curve = 0; curve < series.length ++curve){
+	for(series = 0; series < map.length ++series){
 		
-		var point = series[curve].length;
+		var point = map[series].length;
 		
 		ctx.beginPath();
-		ctx.strokeStyle="rgba("+r+","+g+","+b+","+a+")";
+		ctx.strokeStyle="red";
 		ctx.moveTo(20,20);
+		
 		while(--point){
-			point = series[curve][point]
-			ctx.lineTo(point[0], point[1])
+			ctx.lineTo(map[series][point][0], map[series][point][1])
 		}
-		ctx.stroke(); 
+		ctx.stroke();
 	}
+	
+	//	var point = series.length; 
+	//while(point--){ 
+		//ctx.fillStyle = "rgba("+r+","+g+","+b+","+a+")"; 
+	//	ctx.fillRect(series[point][0] + midx, series[point][1] + midy, 1, 1 ); 
+	//} 
+
 }
 
 function getPosition(orbit, days){
 	var RADS = 0.017453292519943295;
-    var cy = days / 36525;
-    var meanDistance = orbit.meanDistance;
-    var eccentricity = orbit.eccentricity;
-    var inclination = orbit.inclination* RADS; 
-    var longitudeOfAscending = orbit.longitudeOfAscending * RADS; 
-    var longitudeOfPerigee = orbit.longitudeOfPerigee * RADS; 
-    var meanLongitude = mod2pi((orbit.meanLongitude + orbit.meanLongitudeCoef*cy/3600) * RADS); 
-
-    var meanAnomaly = mod2pi(meanLongitude - longitudeOfPerigee);
-    var eccentricAnomalyApprox = meanAnomaly + eccentricity * Math.sin(meanAnomaly) * (1.0 + eccentricity * Math.cos(meanAnomaly));
-    var eccentricAnomaly = 0;
-
-    do
-    {
-        eccentricAnomaly = eccentricAnomalyApprox;
-        eccentricAnomalyApprox = eccentricAnomaly - (eccentricAnomaly - eccentricity * Math.sin(eccentricAnomaly) - meanAnomaly) / (1 - eccentricity * Math.cos(eccentricAnomaly));
-    }
-    while (Math.abs(eccentricAnomaly - eccentricAnomalyApprox) > 0.0000000001);
-
-    var trueAnomaly = 2 * Math.atan(Math.sqrt((1 + eccentricity) / (1 - eccentricity)) * Math.tan(0.5 * eccentricAnomaly));
-    var helioCentricRadius = (meanDistance * (1 - (eccentricity * eccentricity))) / (1 + (eccentricity * (Math.cos(trueAnomaly))));
-
-    var x = helioCentricRadius * (Math.cos(longitudeOfAscending) * Math.cos(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) - Math.sin(longitudeOfAscending) * Math.sin(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) * Math.cos(inclination));
-    var y = helioCentricRadius * (Math.sin(longitudeOfAscending) * Math.cos(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) + Math.cos(longitudeOfAscending) * Math.sin(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) * Math.cos(inclination));
-    var z = helioCentricRadius * (Math.sin(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) * Math.sin(inclination));
-
-    return [x*graph.value, y*graph.value, z*graph.value];
+	var cy = days / 36525;
+	var meanDistance = orbit.meanDistance;
+	var eccentricity = orbit.eccentricity;
+	var inclination = orbit.inclination* RADS; 
+	var longitudeOfAscending = orbit.longitudeOfAscending * RADS; 
+	var longitudeOfPerigee = orbit.longitudeOfPerigee * RADS; 
+	var meanLongitude = mod2pi((orbit.meanLongitude + orbit.meanLongitudeCoef*cy/3600) * RADS); 
+	
+	var meanAnomaly = mod2pi(meanLongitude - longitudeOfPerigee);
+	var eccentricAnomalyApprox = meanAnomaly + eccentricity * Math.sin(meanAnomaly) * (1.0 + eccentricity * Math.cos(meanAnomaly));
+	var eccentricAnomaly = 0;
+	
+	do
+	{
+		eccentricAnomaly = eccentricAnomalyApprox;
+		eccentricAnomalyApprox = eccentricAnomaly - (eccentricAnomaly - eccentricity * Math.sin(eccentricAnomaly) - meanAnomaly) / (1 - eccentricity * Math.cos(eccentricAnomaly));
+	}
+	while (Math.abs(eccentricAnomaly - eccentricAnomalyApprox) > 0.0000000001);
+	
+	var trueAnomaly = 2 * Math.atan(Math.sqrt((1 + eccentricity) / (1 - eccentricity)) * Math.tan(0.5 * eccentricAnomaly));
+	var helioCentricRadius = (meanDistance * (1 - (eccentricity * eccentricity))) / (1 + (eccentricity * (Math.cos(trueAnomaly))));
+	
+	var x = helioCentricRadius * (Math.cos(longitudeOfAscending) * Math.cos(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) - Math.sin(longitudeOfAscending) * Math.sin(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) * Math.cos(inclination));
+	var y = helioCentricRadius * (Math.sin(longitudeOfAscending) * Math.cos(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) + Math.cos(longitudeOfAscending) * Math.sin(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) * Math.cos(inclination));
+	var z = helioCentricRadius * (Math.sin(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) * Math.sin(inclination));
+	
+	return [x*graph.value, y*graph.value, z*graph.value];
 }
 
 function mod2pi(x)
 {
-    var b = x / (2 * Math.PI);
-    var a = (2 * Math.PI) * (b - abs_floor(b));
-    if (a < 0) a = (2 * Math.PI) + a;
-    return a;
+	var b = x / (2 * Math.PI);
+	var a = (2 * Math.PI) * (b - abs_floor(b));
+	if (a < 0) a = (2 * Math.PI) + a;
+	return a;
 }
 
 function abs_floor(x)
 {
-    var r;
-    if (x >= 0.0) r = Math.floor(x);
-    else r = Math.ceil(x);
-    return r;
+	var r;
+	if (x >= 0.0) r = Math.floor(x);
+	else r = Math.ceil(x);
+	return r;
 }
 rescaleCanvas()
