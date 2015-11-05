@@ -91,7 +91,7 @@ function drawSeries(series, colour){
 	b = colour[2];
 	a = colour[3]/255;
 
-	for(curve = 0; curve < series.length(); ++curve){
+	for(curve = 0; curve < series.length ++curve){
 		
 		var point = series[curve].length;
 		
