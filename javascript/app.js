@@ -42,7 +42,7 @@ function rescaleCanvas(){
 	canvas.width = window.innerWidth - 250;
 	var start = new Date().getTime();
 	var x = transform(curve,xslider.value,yslider.value,zslider.value)
-	drawSeries(x, [0,0,0,255]);     
+	drawSeries(x, [255,255,255,255]);     
 	var end = new Date().getTime();
 	console.log(end - start)
 }
