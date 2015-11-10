@@ -1,4 +1,4 @@
-function drawSeries(map, colour){
+function drawOrbit(path, colour){
 	var midx = Math.floor((canvas.width)/2);
 	var midy = Math.floor(canvas.height/2);
 
@@ -7,24 +7,17 @@ function drawSeries(map, colour){
 	b = colour[2];
 	a = colour[3]/255;
 
-	for(series = 0; series < map.length; ++series){
 		
-		var point = map[series].length;
-		
-		ctx.beginPath();
-		ctx.strokeStyle="red";
-		ctx.moveTo(20,20);
-		
-		while(--point){
-			ctx.lineTo(map[series][point][0] + midx, map[series][point][1] + midy)
-		}
-		ctx.stroke();
-	}
-	
-	//	var point = series.length; 
-	//while(point--){ 
-		//ctx.fillStyle = "rgba("+r+","+g+","+b+","+a+")"; 
-	//	ctx.fillRect(series[point][0] + midx, series[point][1] + midy, 1, 1 ); 
-	//} 
+	var point = path.length - 1;
 
+	ctx.strokeStyle="rgba("+r+","+g+","+b+","+a+")";
+
+	ctx.moveTo(path[point][0] + midx, path[point][1] + midy);	
+	ctx.beginPath();
+	ctx.lineTo(path[path.length - 1][0]*graph.value + midx, path[path.length - 1][1]*graph.value + midy)
+	while(point--){
+		ctx.lineTo(path[point][0]*graph.value + midx, path[point][1]*graph.value + midy)
+	}
+	ctx.lineTo(path[path.length - 1][0]*graph.value + midx, path[path.length - 1][1]*graph.value + midy)
+	ctx.stroke();	
 }
