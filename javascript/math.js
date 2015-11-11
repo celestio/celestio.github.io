@@ -26,7 +26,7 @@ function getPosition(orbit, days){
 	var y = helioCentricRadius * (Math.sin(longitudeOfAscending) * Math.cos(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) + Math.cos(longitudeOfAscending) * Math.sin(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) * Math.cos(inclination));
 	var z = helioCentricRadius * (Math.sin(trueAnomaly + longitudeOfPerigee - longitudeOfAscending) * Math.sin(inclination));
 	
-	return [x*graph.value, y*graph.value, z*graph.value];
+	return [x, y, z];
 }
 
 function mod2pi(x)
@@ -45,15 +45,14 @@ function abs_floor(x)
 	return r;
 }
 
-function transform(orbits, xr, yr, zr){
-	var cosx = Math.cos(xr)
-	var cosy = Math.cos(yr)
-	var cosz = Math.cos(zr)
-	var sinx = Math.sin(xr)
-	var siny = Math.sin(yr)
-	var sinz = Math.sin(zr)
+function transform(orbit){
 
-	var transformed = []
+	var cosx = Math.cos(xslider.value)
+	var cosy = Math.cos(yslider.value)
+	var cosz = Math.cos(zslider.value)
+	var sinx = Math.sin(xslider.value)
+	var siny = Math.sin(yslider.value)
+	var sinz = Math.sin(zslider.value)
 
 	var a = cosy*cosz;
 	var b = -sinz*cosy;
@@ -64,19 +63,18 @@ function transform(orbits, xr, yr, zr){
 	var g = sinz*sinx - siny*cosz*cosx;
 	var h = cosx*siny*sinz + cosz*sinx;
 	var i = cosx*cosy;
-	for(curve = 0; curve < series.length; curve++){
-		transformedCurve = []
-		for(point = 2, len = series[curve].length; point < len; ++point){
-			x = series[curve][point][0];
-			y = series[curve][point][1];
-			z = series[curve][point][2];
-			transformedCurve.push(
-			[x * a + y * b + z * c,
-			 x * d + y * e + z * f,
-			 x * g + y * h + z * i]);
-			 
-		}
-		transformed.push(transformedCurve)
+
+	transformedCurve = []
+
+	for(point = 0; point < orbit.length; ++point){
+		x = orbit[point][0];
+		y = orbit[point][1];
+		z = orbit[point][2];
+		transformedCurve.push(
+		[x * a + y * b + z * c,
+		 x * d + y * e + z * f,
+		 x * g + y * h + z * i]);
+		 
 	}
-	return transformed;
+	return transformedCurve;
 }

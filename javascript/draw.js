@@ -1,4 +1,4 @@
-function drawOrbit(path, colour){
+function drawOrbit(orbit, colour){
 	var midx = Math.floor((canvas.width)/2);
 	var midy = Math.floor(canvas.height/2);
 
@@ -7,6 +7,7 @@ function drawOrbit(path, colour){
 	b = colour[2];
 	a = colour[3]/255;
 
+	path = transform(orbit)
 		
 	var point = path.length - 1;
 
@@ -14,10 +15,12 @@ function drawOrbit(path, colour){
 
 	ctx.moveTo(path[point][0] + midx, path[point][1] + midy);	
 	ctx.beginPath();
-	ctx.lineTo(path[path.length - 1][0]*graph.value + midx, path[path.length - 1][1]*graph.value + midy)
+
+	ctx.lineTo(path[path.length - 1][0]*graph.value + midx, path[path.length - 1][1]*graph.value + midy)	
 	while(point--){
 		ctx.lineTo(path[point][0]*graph.value + midx, path[point][1]*graph.value + midy)
 	}
 	ctx.lineTo(path[path.length - 1][0]*graph.value + midx, path[path.length - 1][1]*graph.value + midy)
+
 	ctx.stroke();	
 }

@@ -30,13 +30,13 @@ var uranus = new Orbit([255,255,0,255], "x", 19.19126393, 0.04716771, 0.76986, 7
 var neptune = new Orbit([255,255,0,255], "x", 30.06896348, 0.00858587 , 1.76917, 131.72169, 44.97135, 304.88003, 786449.21, 0);
 var pluto = new Orbit([255,255,0,255], "x", 39.48168677, 0.24880766 , 17.14175, 110.30347, 224.06676, 238.92881, 522747.90, 0);
 
-var selectedOrbits = [mercury, venus, earth, mars];
+var selectedOrbits = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, pluto];
 
 
 
 Orbit.prototype.createOrbit = function() { //maybe add precision arg?
 	this.path = [];
-	for(d = 0; d < 365*earth.meanLongitudeCoef/this.meanLongitudeCoef; ++d){
+	for(d = 0; d < 365*earth.meanLongitudeCoef/this.meanLongitudeCoef; d = d + (earth.meanLongitudeCoef)/(this.meanLongitudeCoef)){
 		this.path.push(getPosition(this, d));
 	}
 }
@@ -55,7 +55,7 @@ function removeOrbit(orbitTag){
 	}
 }
 
-function rescaleCanvas(){
+function redrawCanvas(){
 	canvas.style.height = window.innerHeight;
 	canvas.style.width = window.innerWidth - 250;
 	canvas.height = window.innerHeight;
@@ -72,4 +72,4 @@ function rescaleCanvas(){
 }
 
 initialiseOrbits();
-rescaleCanvas();
+redrawCanvas();
