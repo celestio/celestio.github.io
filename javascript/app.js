@@ -69,6 +69,9 @@ function redrawCanvas(){
 
 	var end = new Date().getTime();
 	console.log(end - start);
+
+	ctx.fillStyle = "white"
+    ctx.fillText(end - start + "ms", 20, 20);
 }
 
 initialiseOrbits();
