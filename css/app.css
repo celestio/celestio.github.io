@@ -1,27 +1,29 @@
+/*http://www.colourlovers.com/blog/2008/05/06/colors-from-outer-space*/
+
 html{
     overflow: hidden;
 }
 
 h1{
-    color: #F8F8F2;
+    color: #383838;
     font-size: 30px;
     margin-left: 10px;
     font-family: courier;
 }
 
 p{
-    color: #F8F8F2;
+    color: #383838;
     font-size: 14px;
     margin-left: 10px;
     font-family: courier;
 }
 
 #map {
-    background-color: #104B5E;
+    background-color: #212121;
 }
 
 .sidebar {
-    background-color: #272822;
+    background-color: #E6E6E6;
     position: absolute;
     left: 0; 
     top: 0px; 
@@ -45,7 +47,7 @@ p{
     height: 30px;
     margin-left: 5px;
     background-color: #75715E;
-    color: #F8F8F2;
+    color: #383838;
     padding: 0;
     border: none;
     font-family: courier;
