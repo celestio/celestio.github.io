@@ -61,7 +61,7 @@ function redrawCanvas(time){
 	
 	ctx.fillStyle = 'rgb(250,250,250)';
         ctx.font = "10pt Courier";
-        ctx.fillText(FPS+"fps", 10, 20);
+        ctx.fillText(fps+"fps", 10, 20);
 	
 	prevTime = time;
 	
