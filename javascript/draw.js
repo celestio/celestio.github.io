@@ -37,7 +37,7 @@ function drawObject(orbit){
 	
 	ctx.beginPath();
 	ctx.arc(position[0][0]*graph.value + midx, position[0][1]*graph.value + midy, 10, 0, 2*Math.PI);
-	ctx.strokeStyle="rgba("+r+","+g+","+b+","+a+")";
+	ctx.strokeStyle="black";
 	ctx.stroke();
 	
 	ctx.fillStyle="rgba("+r+","+g+","+b+","+a+")";
