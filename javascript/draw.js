@@ -1,6 +1,6 @@
 function drawOrbit(orbitPath, colour){
-	var midx = Math.floor((canvas.width)/2);
-	var midy = Math.floor(canvas.height/2);
+	midx = Math.floor((canvas.width)/2);
+	midy = Math.floor(canvas.height/2);
 
 	r = colour[0];
 	g = colour[1];
@@ -27,10 +27,13 @@ function drawOrbit(orbitPath, colour){
 
 function drawObject(orbit){
 	
+	midx = Math.floor((canvas.width)/2);
+	midy = Math.floor(canvas.height/2);
+	
 	position = getPosition(orbit, date.value)
 	
 	ctx.beginPath();
-	ctx.arc(position[0], position[1], 50, 0, 2*Math.PI);
+	ctx.arc(position[0] + midx, position[1] + midy, 10, 0, 2*Math.PI);
 	ctx.strokeStyle = '#000000';
 	ctx.stroke();
 	ctx.fillStyle = '#FF0000';
