@@ -6,7 +6,6 @@ var graph = document.getElementById("scale");
 var date = document.getElementById("date")
 var ctx = canvas.getContext("2d");
 
-
 //REOREDER WHEN DOING SQL
 function Orbit(colour, tag, meanDistance, eccentricity, inclination, longitudeOfAscending, longitudeOfPerigee, meanLongitude, meanLongitudeCoef, origin) {
 	this.tag = tag;
