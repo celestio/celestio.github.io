@@ -29,7 +29,7 @@ slowforward.onclick = function(){
 }
 
 fastforward.onclick = function(){
-	daysPerSecond = 500;
+	daysPerSecond = 365.2*60;
 }
 
 function Orbit(colour, tag, meanDistance, eccentricity, inclination, longitudeOfAscending, longitudeOfPerigee, meanLongitude, meanLongitudeCoef, origin) {
