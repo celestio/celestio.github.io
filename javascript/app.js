@@ -57,7 +57,15 @@ function removeOrbit(orbitTag){
 	}
 }
 
-function redrawCanvas(){
+function redrawCanvas(time){
+	fps = Math.round(1000/(time - prevTime));
+	
+	canvasCtx.fillStyle = 'rgb(250,250,250)';
+        canvasCtx.font = "10pt Courier";
+        canvasCtx.fillText(FPS+"fps", 10, 20);
+	
+	prevTime = time;
+	
 	canvas.style.height = window.innerHeight;
 	canvas.style.width = window.innerWidth - 250;
 	canvas.height = window.innerHeight;
@@ -76,5 +84,6 @@ function redrawCanvas(){
 	window.requestAnimationFrame(redrawCanvas);
 }
 
+prevTime = 0;
 initialiseOrbits();
 redrawCanvas();
