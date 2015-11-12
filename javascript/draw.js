@@ -28,13 +28,18 @@ function drawObject(orbit){
 	midx = Math.floor((canvas.width)/2);
 	midy = Math.floor(canvas.height/2);
 	
+	r = orbit.colour[0]
+	g = orbit.colour[1]
+	b = orbit.colour[2]
+	a = orbit.colour[3]
+	
 	position = transform([getPosition(orbit, date.value)]);
 	
 	ctx.beginPath();
 	ctx.arc(position[0][0]*graph.value + midx, position[0][1]*graph.value + midy, 10, 0, 2*Math.PI);
-	ctx.strokeStyle = '#000000';
+	ctx.strokeStyle="rgba("+r+","+g+","+b+","+a+")";
 	ctx.stroke();
 	
-	ctx.fillStyle = '#FF0000';
+	ctx.fillStyle="rgba("+r+","+g+","+b+","+a+")";
 	ctx.fill();
 }
