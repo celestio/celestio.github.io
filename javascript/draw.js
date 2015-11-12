@@ -29,11 +29,10 @@ function drawObject(orbit){
 	
 	position = getPosition(orbit, date.value)
 	
-	context.beginPath();
-	context.arc(position[0], position[1], 50, 0, 2*Math.PI);
-	context.strokeStyle = '#000000';
-	context.stroke();
-	context.fillStyle = '#FF0000';
-	context.fill();
-
+	ctx.beginPath();
+	ctx.arc(position[0], position[1], 50, 0, 2*Math.PI);
+	ctx.strokeStyle = '#000000';
+	ctx.stroke();
+	ctx.fillStyle = '#FF0000';
+	ctx.fill();
 }
