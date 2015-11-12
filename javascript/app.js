@@ -68,7 +68,7 @@ function redrawCanvas(){
 		drawOrbit(selectedOrbits[i].path, selectedOrbits[i].colour);
 		drawObject(selectedOrbits[i])
 	};
-	date.value += 1;
+	date.value = (parseFloat(date.value) + 1).toString()
 	var end = new Date().getTime();
 	//console.log(end - start);
 	
