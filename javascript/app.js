@@ -75,7 +75,3 @@ function redrawCanvas(){
 
 initialiseOrbits();
 redrawCanvas();
-
-while (true){
-	date.value += 0.0001
-}
