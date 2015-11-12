@@ -57,6 +57,9 @@ function removeOrbit(orbitTag){
 }
 
 function redrawCanvas(time){
+	canvas.setAttribute("width", window.innerWidth - 250); 
+	canvas.setAttribute("height", window.innerHeight); 
+	
 	fps = Math.round(1000/(time - prevTime));
 	
 	ctx.fillStyle = 'rgb(250,250,250)';
@@ -64,11 +67,6 @@ function redrawCanvas(time){
         ctx.fillText(fps+"fps", 10, 20);
 	
 	prevTime = time;
-	
-	canvas.style.height = window.innerHeight;
-	canvas.style.width = window.innerWidth - 250;
-	canvas.height = window.innerHeight;
-	canvas.width = window.innerWidth - 250; 
 
 	var start = new Date().getTime(); 
 
