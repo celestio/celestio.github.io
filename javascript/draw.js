@@ -32,7 +32,7 @@ function drawObject(orbit){
 	position = transform([getPosition(orbit, date.value)]);
 	
 	ctx.beginPath();
-	ctx.arc(position[0].graph.value + midx, position[1].graph.value + midy, 10, 0, 2*Math.PI);
+	ctx.arc(position[0]*graph.value + midx, position[1]*graph.value + midy, 10, 0, 2*Math.PI);
 	ctx.strokeStyle = '#000000';
 	ctx.stroke();
 	
