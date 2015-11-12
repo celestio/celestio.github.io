@@ -12,7 +12,23 @@ var slowforward = document.getElementById("slowforward")
 var fastforward = document.getElementById("fastforward")
 
 fastback.onclick = function(){
-	daysPerSecond = 
+	daysPerSecond = -2
+}
+
+slowback.onclick = function(){
+	daysPerSecond = -1
+}
+
+pause.onclick = function(){
+	daysPerSecond = 0
+}
+
+slowforward.onclick = function(){
+	daysPerSecond = 1
+}
+
+fastforward.onclick = function(){
+	daysPerSecond = 2
 }
 
 var ctx = canvas.getContext("2d");
