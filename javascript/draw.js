@@ -1,26 +1,45 @@
-function drawOrbit(orbit, colour){
-	var midx = Math.floor((canvas.width)/2);
-	var midy = Math.floor(canvas.height/2);
+function drawOrbit(orbitPath, colour){
+	midx = Math.floor((canvas.width)/2);
+	midy = Math.floor(canvas.height/2);
 
 	r = colour[0];
 	g = colour[1];
 	b = colour[2];
 	a = colour[3]/255;
 
-	path = transform(orbit)
+	transformedPath = transform(orbitPath)
 		
-	var point = path.length - 1;
+	var point = transformedPath.length - 1;
 
 	ctx.strokeStyle="rgba("+r+","+g+","+b+","+a+")";
 
-	ctx.moveTo(path[point][0] + midx, path[point][1] + midy);	
+	ctx.moveTo(transformedPath[point][0] + midx, transformedPath[point][1] + midy);	
 	ctx.beginPath();
 
-	ctx.lineTo(path[path.length - 1][0]*graph.value + midx, path[path.length - 1][1]*graph.value + midy)	
+	ctx.lineTo(transformedPath[transformedPath.length - 1][0]*graph.value + midx, transformedPath[transformedPath.length - 1][1]*graph.value + midy)	
 	while(point--){
-		ctx.lineTo(path[point][0]*graph.value + midx, path[point][1]*graph.value + midy)
+		ctx.lineTo(transformedPath[point][0]*graph.value + midx, transformedPath[point][1]*graph.value + midy)
 	}
-	ctx.lineTo(path[path.length - 1][0]*graph.value + midx, path[path.length - 1][1]*graph.value + midy)
-
+	ctx.lineTo(transformedPath[transformedPath.length - 1][0]*graph.value + midx, transformedPath[transformedPath.length - 1][1]*graph.value + midy)
 	ctx.stroke();	
+}
+
+function drawObject(orbit){
+	midx = Math.floor((canvas.width)/2);
+	midy = Math.floor(canvas.height/2);
+	
+	r = orbit.colour[0]
+	g = orbit.colour[1]
+	b = orbit.colour[2]
+	a = orbit.colour[3]
+	
+	position = transform([getPosition(orbit, date.value)]);
+	
+	ctx.beginPath();
+	ctx.arc(position[0][0]*graph.value + midx, position[0][1]*graph.value + midy, 10, 0, 2*Math.PI);
+	ctx.strokeStyle="black";
+	ctx.stroke();
+	
+	ctx.fillStyle="rgba("+r+","+g+","+b+","+a+")";
+	ctx.fill();
 }

@@ -4,13 +4,14 @@
 		<link rel="stylesheet" type="text/css" href="css\app.css">
 	</head>
 
-	<body onresize="redrawCanvas()">
+	<body>
 
 		<div class="sidebar">
 
 			<h1> Celestio </h1>
 
 			<p>X Rotation</p>
+<<<<<<< HEAD
 			<input id="xSlider" onInput="redrawCanvas()" onChange="redrawCanvas()" type="range" min="-5" max="5" step="any" > </input>
 			<p>Y Rotation</p>
 			<input id="ySlider" onInput="redrawCanvas();" onChange="redrawCanvas()" type="range" min="-5" max="5" step="any"> </input>
@@ -19,6 +20,18 @@
 
 			<p><br/>Scale</p>
 			<input id="scale" onInput="redrawCanvas();" type="text" name="date" value="8">
+=======
+			<input id="xSlider" type="range" min="-5" max="5" step="0.001" > </input>
+			<p>Y Rotation</p>
+			<input id="ySlider" type="range" min="-5" max="5" step="0.001"> </input>
+			<p>Z Rotation</p>
+			<input id="zSlider" type="range" min="-5" max="5" step="0.0001"> </input>
+
+			<p><br/>Scale</p>
+			<input id="scale" type="number" value="5">
+			<p><br/>Date</p>
+			<input id="date" type="number" value="5">
+>>>>>>> origin/master
 
 			<p><br/>Time Control</p>
 			<div class="timeControl">
@@ -31,7 +44,7 @@
 
 		</div>
 
-		<div class="main">		
+		<div class="main">
 			<canvas id="map"></canvas>
 		</div>
 

@@ -3,7 +3,39 @@ var xslider = document.getElementById("xSlider");
 var yslider = document.getElementById("ySlider");
 var zslider = document.getElementById("zSlider");
 var graph = document.getElementById("scale");
+var date = document.getElementById("date");
+
+var fastback = document.getElementById("fastback")
+var slowback = document.getElementById("slowback")
+var pause = document.getElementById("pause")
+var slowforward = document.getElementById("slowforward")
+var fastforward = document.getElementById("fastforward")
+
+fastback.onclick = function(){
+	daysPerSecond = -2
+}
+
+slowback.onclick = function(){
+	daysPerSecond = -1
+}
+
+pause.onclick = function(){
+	daysPerSecond = 0
+}
+
+slowforward.onclick = function(){
+	daysPerSecond = 1
+}
+
+fastforward.onclick = function(){
+	daysPerSecond = 2
+}
+
 var ctx = canvas.getContext("2d");
+
+
+var daysPerSecond = 365.251;
+
 
 //REOREDER WHEN DOING SQL
 function Orbit(colour, tag, meanDistance, eccentricity, inclination, longitudeOfAscending, longitudeOfPerigee, meanLongitude, meanLongitudeCoef, origin) {
@@ -55,24 +87,41 @@ function removeOrbit(orbitTag){
 	}
 }
 
-function redrawCanvas(){
-	canvas.style.height = window.innerHeight;
-	canvas.style.width = window.innerWidth - 250;
-	canvas.height = window.innerHeight;
-	canvas.width = window.innerWidth - 250; 
+function redrawCanvas(time){
+	canvas.setAttribute("width", window.innerWidth - 250); 
+	canvas.setAttribute("height", window.innerHeight);
+	
+	prevFrameTime = time - prevTime
+	
+	fps = Math.round(1000/(prevFrameTime));
+	
+	ctx.fillStyle = 'rgb(250,250,250)';
+        ctx.font = "10pt Courier";
+        ctx.fillText(fps+"fps", 10, 20);
+	
+	
 
 	var start = new Date().getTime(); 
 
 	for (i = 0; i < selectedOrbits.length; ++i) {
 		drawOrbit(selectedOrbits[i].path, selectedOrbits[i].colour);
+		drawObject(selectedOrbits[i])
 	};
-
+	date.value = (parseFloat(date.value) + prevFrameTime*daysPerSecond/1000).toString()
 	var end = new Date().getTime();
+<<<<<<< HEAD
 	console.log(end - start);
 
 	ctx.fillStyle = "white"
     ctx.fillText(end - start + "ms", 20, 20);
+=======
+
+	prevTime = time;
+	
+	window.requestAnimationFrame(redrawCanvas);
+>>>>>>> origin/master
 }
 
+prevTime = 0;
 initialiseOrbits();
 redrawCanvas();
