@@ -6,6 +6,10 @@ var graph = document.getElementById("scale");
 var date = document.getElementById("date")
 var ctx = canvas.getContext("2d");
 
+
+var daysPerSecond = 365.251;
+
+
 //REOREDER WHEN DOING SQL
 function Orbit(colour, tag, meanDistance, eccentricity, inclination, longitudeOfAscending, longitudeOfPerigee, meanLongitude, meanLongitudeCoef, origin) {
 	this.tag = tag;
@@ -58,15 +62,17 @@ function removeOrbit(orbitTag){
 
 function redrawCanvas(time){
 	canvas.setAttribute("width", window.innerWidth - 250); 
-	canvas.setAttribute("height", window.innerHeight); 
+	canvas.setAttribute("height", window.innerHeight);
 	
-	fps = Math.round(1000/(time - prevTime));
+	prevFrameTime = time - prevTime
+	
+	fps = Math.round(1000/(prevFrameTime));
 	
 	ctx.fillStyle = 'rgb(250,250,250)';
         ctx.font = "10pt Courier";
         ctx.fillText(fps+"fps", 10, 20);
 	
-	prevTime = time;
+	
 
 	var start = new Date().getTime(); 
 
@@ -74,9 +80,10 @@ function redrawCanvas(time){
 		drawOrbit(selectedOrbits[i].path, selectedOrbits[i].colour);
 		drawObject(selectedOrbits[i])
 	};
-	date.value = (parseFloat(date.value) + 1).toString()
+	date.value = (parseFloat(date.value) + 1000*prevFrameTime*daysPerSecond).toString()
 	var end = new Date().getTime();
-	//console.log(end - start);
+
+	prevTime = time;
 	
 	window.requestAnimationFrame(redrawCanvas);
 }
