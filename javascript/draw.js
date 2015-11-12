@@ -25,7 +25,6 @@ function drawOrbit(orbitPath, colour){
 }
 
 function drawObject(orbit){
-	
 	midx = Math.floor((canvas.width)/2);
 	midy = Math.floor(canvas.height/2);
 	
