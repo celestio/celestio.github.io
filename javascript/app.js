@@ -3,7 +3,18 @@ var xslider = document.getElementById("xSlider");
 var yslider = document.getElementById("ySlider");
 var zslider = document.getElementById("zSlider");
 var graph = document.getElementById("scale");
-var date = document.getElementById("date")
+var date = document.getElementById("date");
+
+var fastback = document.getElementById("fastback")
+var slowback = document.getElementById("slowback")
+var pause = document.getElementById("pause")
+var slowforward = document.getElementById("slowforward")
+var fastforward = document.getElementById("fastforward")
+
+fastback.onclick = function(){
+	daysPerSecond = 
+}
+
 var ctx = canvas.getContext("2d");
 
 
@@ -80,7 +91,7 @@ function redrawCanvas(time){
 		drawOrbit(selectedOrbits[i].path, selectedOrbits[i].colour);
 		drawObject(selectedOrbits[i])
 	};
-	date.value = (parseFloat(date.value) + 1000*prevFrameTime*daysPerSecond).toString()
+	date.value = (parseFloat(date.value) + prevFrameTime*daysPerSecond/1000).toString()
 	var end = new Date().getTime();
 
 	prevTime = time;
