@@ -29,7 +29,7 @@ function drawObject(orbit){
 	midx = Math.floor((canvas.width)/2);
 	midy = Math.floor(canvas.height/2);
 	
-	position = getPosition(orbit, date.value)
+	position = transform(getPosition(orbit, date.value));
 	
 	ctx.beginPath();
 	ctx.arc(position[0] + midx, position[1] + midy, 10, 0, 2*Math.PI);
