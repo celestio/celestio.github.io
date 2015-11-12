@@ -79,11 +79,18 @@ function removeOrbit(orbitTag){
 	}
 }
 
-function doScroll(e){
+function doScroll(e){ //maybe add sensitivity arg?
     e = window.event || e;
     var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 
-    scale.value = (parseFloat(scale.value) * (delta * 0.15 + 1)).toString()
+    if(delta == -1){
+    	scale.value = (parseFloat(scale.value) * 0.8).toString()
+    }
+
+    else{
+    	scale.value = (parseFloat(scale.value) * 1.25).toString()
+    }
+    
     e.preventDefault();
 };
 
