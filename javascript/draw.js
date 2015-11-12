@@ -21,7 +21,6 @@ function drawOrbit(orbitPath, colour){
 		ctx.lineTo(transformedPath[point][0]*graph.value + midx, transformedPath[point][1]*graph.value + midy)
 	}
 	ctx.lineTo(transformedPath[transformedPath.length - 1][0]*graph.value + midx, transformedPath[transformedPath.length - 1][1]*graph.value + midy)
-
 	ctx.stroke();	
 }
 
