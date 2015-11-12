@@ -60,9 +60,9 @@ function removeOrbit(orbitTag){
 function redrawCanvas(time){
 	fps = Math.round(1000/(time - prevTime));
 	
-	canvasCtx.fillStyle = 'rgb(250,250,250)';
-        canvasCtx.font = "10pt Courier";
-        canvasCtx.fillText(FPS+"fps", 10, 20);
+	ctx.fillStyle = 'rgb(250,250,250)';
+        ctx.font = "10pt Courier";
+        ctx.fillText(FPS+"fps", 10, 20);
 	
 	prevTime = time;
 	
