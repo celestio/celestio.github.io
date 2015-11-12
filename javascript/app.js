@@ -66,6 +66,7 @@ function redrawCanvas(){
 
 	for (i = 0; i < selectedOrbits.length; ++i) {
 		drawOrbit(selectedOrbits[i].path, selectedOrbits[i].colour);
+		drawObject(selectedOrbits[i])
 	};
 
 	var end = new Date().getTime();
