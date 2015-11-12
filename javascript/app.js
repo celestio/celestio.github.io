@@ -68,9 +68,11 @@ function redrawCanvas(){
 		drawOrbit(selectedOrbits[i].path, selectedOrbits[i].colour);
 		drawObject(selectedOrbits[i])
 	};
-
+	date.value += 1;
 	var end = new Date().getTime();
-	console.log(end - start);
+	//console.log(end - start);
+	
+	window.requestAnimationFrame(redrawCanvas);
 }
 
 initialiseOrbits();
