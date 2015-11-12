@@ -35,6 +35,7 @@ function drawObject(orbit){
 	ctx.arc(position[0] + midx, position[1] + midy, 10, 0, 2*Math.PI);
 	ctx.strokeStyle = '#000000';
 	ctx.stroke();
+	
 	ctx.fillStyle = '#FF0000';
 	ctx.fill();
 }
