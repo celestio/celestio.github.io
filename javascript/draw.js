@@ -57,8 +57,8 @@ function redrawCanvas(time){
 	canvas.setAttribute("width", window.innerWidth - 250); 
 	canvas.setAttribute("height", window.innerHeight);
 	
-	prevFrameTime = time - prevTime
-	
+	prevFrameTime = time - prevTime;
+
 	fps = Math.round(1000/(prevFrameTime));
 	
 	ctx.fillStyle = 'rgb(250,250,250)';
@@ -69,6 +69,7 @@ function redrawCanvas(time){
 		drawOrbit(selectedOrbits[i].path, selectedOrbits[i].colour);
 		drawObject(selectedOrbits[i])
 	};
+
 	date.value = (parseFloat(date.value) + prevFrameTime*daysPerSecond/1000).toString()
 
 	prevTime = time;

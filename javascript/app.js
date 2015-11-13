@@ -1,7 +1,7 @@
 var canvas = document.getElementById("map");
-var xslider = document.getElementById("xSlider");
-var yslider = document.getElementById("ySlider");
-var zslider = document.getElementById("zSlider");
+// var xslider = document.getElementById("xSlider");
+// var yslider = document.getElementById("ySlider");
+// var zslider = document.getElementById("zSlider");
 var scale = document.getElementById("scale");
 var date = document.getElementById("date");
 var fastback = document.getElementById("fastback")
@@ -10,27 +10,18 @@ var pause = document.getElementById("pause")
 var slowforward = document.getElementById("slowforward")
 var fastforward = document.getElementById("fastforward")
 var ctx = canvas.getContext("2d");
-var daysPerSecond = 365.251;
 
-fastback.onclick = function(){
-	daysPerSecond = -500;
-}
+var xr = 0;
+var yr = 0;
+var zr = 0;
+var daysPerSecond = 0;
+var mousedown = false;
 
-slowback.onclick = function(){
-	daysPerSecond = -100;
-}
-
-pause.onclick = function(){
-	daysPerSecond = 0;
-}
-
-slowforward.onclick = function(){
-	daysPerSecond = 100;
-}
-
-fastforward.onclick = function(){
-	daysPerSecond = 365.2*60;
-}
+fastback.onclick = function(){daysPerSecond = -500;}
+slowback.onclick = function(){daysPerSecond = -100;}
+pause.onclick = function(){daysPerSecond = 0;}
+slowforward.onclick = function(){daysPerSecond = 100;}
+fastforward.onclick = function(){daysPerSecond = 365.2*60;}
 
 function Orbit(colour, tag, meanDistance, eccentricity, inclination, longitudeOfAscending, longitudeOfPerigee, meanLongitude, meanLongitudeCoef, origin) {
 	this.tag = tag;
@@ -95,17 +86,33 @@ function doScroll(e){ //maybe add sensitivity arg?
 };
 
 function initialisePage(){
-	if (window.addEventListener) {
+
+	if (window.addEventListener){
    		window.addEventListener("mousewheel", doScroll, false);
     	window.addEventListener("DOMMouseScroll", doScroll, false);
-	} 
+	}
 
-	else {
+	else{
     	window.attachEvent("onmousewheel", doScroll);
 	}
 
-	date.value = "1";
-	daysPerSecond = 0;
+	canvas.onmousedown = function(e){mousedown = true; prevMouseX = e.clientX/100; prevMouseY = e.clientY/100;};
+	canvas.onmouseup = function(){mousedown = false;};
+
+	canvas.onmousemove = function(e){
+		mouseX = e.clientX/100;
+		mouseY = e.clientY/100;
+
+		if(mousedown){
+			deltax = mouseX - prevMouseX;
+			deltay = mouseY - prevMouseY;
+			zr += deltax;
+			xr += deltay
+		}		
+
+		prevMouseX = mouseX;
+		prevMouseY = mouseY;
+	}
 }
 
 prevTime = 0;

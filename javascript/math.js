@@ -47,12 +47,12 @@ function abs_floor(x)
 
 function transform(orbit){
 
-	var cosx = Math.cos(xslider.value)
-	var cosy = Math.cos(yslider.value)
-	var cosz = Math.cos(zslider.value)
-	var sinx = Math.sin(xslider.value)
-	var siny = Math.sin(yslider.value)
-	var sinz = Math.sin(zslider.value)
+	var cosx = Math.cos(xr)
+	var cosy = Math.cos(yr)
+	var cosz = Math.cos(zr)
+	var sinx = Math.sin(xr)
+	var siny = Math.sin(yr)
+	var sinz = Math.sin(zr)
 
 	var a = cosy*cosz;
 	var b = -sinz*cosy;
