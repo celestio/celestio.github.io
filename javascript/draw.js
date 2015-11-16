@@ -7,7 +7,7 @@ function drawOrbit(orbitPath, colour){
 	b = colour[2];
 	a = colour[3]/255;
 
-	transformedPath = transform(orbitPath)
+	transformedPath = addPerspective(rotate(orbitPath));
 		
 	var point = transformedPath.length - 1;
 
@@ -16,11 +16,11 @@ function drawOrbit(orbitPath, colour){
 	ctx.moveTo(transformedPath[point][0] + midx, transformedPath[point][1] + midy);	
 	ctx.beginPath();
 
-	ctx.lineTo(transformedPath[transformedPath.length - 1][0]*scale.value + midx, transformedPath[transformedPath.length - 1][1]*scale.value + midy)	
+	ctx.lineTo(transformedPath[transformedPath.length - 1][0]*scale + midx, transformedPath[transformedPath.length - 1][1]*scale + midy)	
 	while(point--){
-		ctx.lineTo(transformedPath[point][0]*scale.value + midx, transformedPath[point][1]*scale.value + midy)
+		ctx.lineTo(transformedPath[point][0]*scale + midx, transformedPath[point][1]*scale + midy)
 	}
-	ctx.lineTo(transformedPath[transformedPath.length - 1][0]*scale.value + midx, transformedPath[transformedPath.length - 1][1]*scale.value + midy)
+	ctx.lineTo(transformedPath[transformedPath.length - 1][0]*scale + midx, transformedPath[transformedPath.length - 1][1]*scale + midy)
 	ctx.stroke();	
 }
 
@@ -33,10 +33,10 @@ function drawObject(orbit){
 	b = orbit.colour[2]
 	a = orbit.colour[3]
 	
-	position = transform([getPosition(orbit, date.value)]);
+	position = addPerspective(rotate([getPosition(orbit, date)]));
 	
 	ctx.beginPath();
-	ctx.arc(position[0][0]*scale.value + midx, position[0][1]*scale.value + midy, 10, 0, 2*Math.PI);
+	ctx.arc(position[0][0]*scale + midx, position[0][1]*scale + midy, 10, 0, 2*Math.PI);
 	ctx.strokeStyle="black";
 	ctx.stroke();
 	
@@ -57,10 +57,10 @@ function redrawCanvas(time){
 	canvas.setAttribute("width", window.innerWidth - 250); 
 	canvas.setAttribute("height", window.innerHeight);
 	
-	prevFrameTime = time - prevTime;
-
-	fps = Math.round(1000/(prevFrameTime));
+	msStart = Date.now();
 	
+	prevFrameTime = time - prevTime;
+	fps = Math.round(1000/(prevFrameTime));	
 	ctx.fillStyle = 'rgb(250,250,250)';
     ctx.font = "10pt Courier";
     ctx.fillText(fps+"fps", 10, 20);	
@@ -69,10 +69,12 @@ function redrawCanvas(time){
 		drawOrbit(selectedOrbits[i].path, selectedOrbits[i].colour);
 		drawObject(selectedOrbits[i])
 	};
+	date = (parseFloat(date) + prevFrameTime*daysPerSecond/1000).toString()
 
-	date.value = (parseFloat(date.value) + prevFrameTime*daysPerSecond/1000).toString()
-
-	prevTime = time;
-	
+	prevTime = time;	
+	ctx.fillStyle = 'rgb(250,250,250)';
+    	ctx.font = "10pt Courier";
+    	ctx.fillText((Date.now() - msStart) + "ms", 60, 20);	
+	syncvariables()	
 	window.requestAnimationFrame(redrawCanvas);
 }
