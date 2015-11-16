@@ -1,27 +1,45 @@
 var canvas = document.getElementById("map");
-// var xslider = document.getElementById("xSlider");
-// var yslider = document.getElementById("ySlider");
-// var zslider = document.getElementById("zSlider");
-var scale = document.getElementById("scale");
-var date = document.getElementById("date");
+var scaleInput = document.getElementById("scale");
+var dateInput = document.getElementById("date");
 var fastback = document.getElementById("fastback")
 var slowback = document.getElementById("slowback")
 var pause = document.getElementById("pause")
 var slowforward = document.getElementById("slowforward")
 var fastforward = document.getElementById("fastforward")
 var ctx = canvas.getContext("2d");
-
+var prevTime = 0;
 var xr = 0;
 var yr = 0;
 var zr = 0;
 var daysPerSecond = 0;
 var mousedown = false;
+var scale = 5;
+var date = 1;
+
+scaleInput.oninput = function() {
+  scale = scaleInput.value;
+};
+
+dateInput.oninput = function() {
+  date = dateInput.value;
+};
 
 fastback.onclick = function(){daysPerSecond = -500;}
 slowback.onclick = function(){daysPerSecond = -100;}
 pause.onclick = function(){daysPerSecond = 0;}
 slowforward.onclick = function(){daysPerSecond = 100;}
 fastforward.onclick = function(){daysPerSecond = 365.2*60;}
+
+function Camera(x, y, z, ex, ey, ez){
+	this.x = x;
+	this.y = y;
+	this.z = z;
+	this.ex = ex;
+	this.ey = ey;
+	this.ez = ez;
+}
+
+var camera = new Camera(1000,1000,1000,10,10,10);
 
 function Orbit(colour, tag, meanDistance, eccentricity, inclination, longitudeOfAscending, longitudeOfPerigee, meanLongitude, meanLongitudeCoef, origin) {
 	this.tag = tag;
@@ -36,6 +54,12 @@ function Orbit(colour, tag, meanDistance, eccentricity, inclination, longitudeOf
 	this.meanLongitudeCoef = meanLongitudeCoef;
 	this.path = []
 }
+Orbit.prototype.createOrbit = function() { //maybe add precision arg?
+	this.path = [];
+	for(d = 0; d < 365*earth.meanLongitudeCoef/this.meanLongitudeCoef; d = d + (earth.meanLongitudeCoef)/(this.meanLongitudeCoef)){
+		this.path.push(getPosition(this, d));
+	}
+}
 
 var mercury = new Orbit([40,40,40,255], "x", 0.38709893, 0.20563069, 7.00487, 48.33167, 77.45645, 252.25084, 538101628.29, 0);
 var venus = new Orbit([40,40,40,255], "x", 0.72333199, 0.00677323, 3.39471, 76.68069, 131.53298, 181.97973, 210664136.06, 0);
@@ -46,20 +70,13 @@ var saturn = new Orbit([40,40,40,255], "x", 9.53707032, 0.05415060, 2.48446, 113
 var uranus = new Orbit([40,40,40,255], "x", 19.19126393, 0.04716771, 0.76986, 74.22988, 170.96424, 313.23218, 1542547.79, 0);
 var neptune = new Orbit([40,40,40,255], "x", 30.06896348, 0.00858587 , 1.76917, 131.72169, 44.97135, 304.88003, 786449.21, 0);
 var pluto = new Orbit([40,40,40,255], "x", 39.48168677, 0.24880766 , 17.14175, 110.30347, 224.06676, 238.92881, 522747.90, 0);
-
-var selectedOrbits = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, pluto];
-
-Orbit.prototype.createOrbit = function() { //maybe add precision arg?
-	this.path = [];
-	for(d = 0; d < 365*earth.meanLongitudeCoef/this.meanLongitudeCoef; d = d + (earth.meanLongitudeCoef)/(this.meanLongitudeCoef)){
-		this.path.push(getPosition(this, d));
-	}
-}
+var selectedOrbits = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, pluto]
 
 function initialiseOrbits(){
 	for(i = 0; i < selectedOrbits.length; ++i){
 		selectedOrbits[i].createOrbit();
 	}
+	redrawCanvas(0);
 }
 
 function removeOrbit(orbitTag){
@@ -75,11 +92,11 @@ function doScroll(e){ //maybe add sensitivity arg?
     var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 
     if(delta == -1){
-    	scale.value = (parseFloat(scale.value) * 0.8).toString()
+    	scale = (parseFloat(scale) * 0.8).toString()
     }
 
     else{
-    	scale.value = (parseFloat(scale.value) * 1.25).toString()
+    	scale = (parseFloat(scale) * 1.25).toString()
     }
     
     e.preventDefault();
@@ -115,6 +132,10 @@ function initialisePage(){
 	}
 }
 
-prevTime = 0;
+function syncvariables(){
+	dateInput.value = date | 0;
+	scaleInput.value = scale | 0;	
+}
+
+syncvariables();
 initialiseOrbits();
-redrawCanvas();
