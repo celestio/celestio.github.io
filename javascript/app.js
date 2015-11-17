@@ -43,6 +43,7 @@ function Orbit(colour, tag, meanDistance, eccentricity, inclination, longitudeOf
 	this.meanLongitude = meanLongitude;
 	this.meanLongitudeCoef = meanLongitudeCoef;
 	this.path = []
+	this.distance = 0
 }
 Orbit.prototype.createOrbit = function() { //maybe add precision arg?
 	this.path = [];

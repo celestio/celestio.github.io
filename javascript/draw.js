@@ -24,6 +24,32 @@ function drawOrbit(orbitPath, colour){
 	ctx.stroke();	
 }
 
+function drawOrbit(orbitPath, colour){
+	midx = Math.floor((canvas.width)/2);
+	midy = Math.floor(canvas.height/2);
+
+	r = colour[0];
+	g = colour[1];
+	b = colour[2];
+	a = colour[3]/255;
+
+	transformedPath = project(rotate(orbitPath));
+		
+	var point = transformedPath.length - 1;
+
+	ctx.strokeStyle="rgba("+r+","+g+","+b+","+a+")";
+
+	ctx.moveTo(transformedPath[point][0] + midx, transformedPath[point][1] + midy);	
+	ctx.beginPath();
+
+	ctx.lineTo(transformedPath[transformedPath.length - 1][0] + midx, transformedPath[transformedPath.length - 1][1] + midy)	
+	while(point--){
+		ctx.lineTo(transformedPath[point][0] + midx, transformedPath[point][1] + midy)
+	}
+	ctx.lineTo(transformedPath[transformedPath.length - 1][0] + midx, transformedPath[transformedPath.length - 1][1] + midy)
+	ctx.stroke();	
+}
+
 function drawObject(orbit){
 	midx = Math.floor((canvas.width)/2);
 	midy = Math.floor(canvas.height/2);
@@ -42,25 +68,17 @@ function drawObject(orbit){
 	
 	ctx.fillStyle="rgba("+r+","+g+","+b+","+a+")";
 	ctx.fill();
+
 }
 
-function drawOrigin(colour){
+function drawOrigin(){
 	ctx.beginPath();
 	ctx.arc(midx, midy, 10, 0, 2*Math.PI);
-	ctx.strokeStyle="colour";
-	ctx.stroke();	
-	ctx.fillStyle="colour";
+	ctx.strokeStyle="#FF6F17";
+	ctx.stroke();
+	
+	ctx.fillStyle="#FF6F17";
 	ctx.fill();
-}
-
-function drawOrbits(orbits){
-	for (i = 0; i < selectedOrbits.length; ++i) {
-		drawOrbit(selectedOrbits[i].path, selectedOrbits[i].colour);
-	};
-}
-
-function drawObjects(orbits){
-
 }
 
 function redrawCanvas(time){
@@ -75,7 +93,11 @@ function redrawCanvas(time){
     ctx.font = "10pt Courier";
     ctx.fillText(fps+"fps", 10, 20);	
 
-	drawOrbits();
+	for (i = 0; i < selectedOrbits.length; ++i) {
+		drawOrbit(selectedOrbits[i].path, selectedOrbits[i].colour);
+		drawObject(selectedOrbits[i])
+	};
+	drawOrigin();
 	date = (parseFloat(date) + prevFrameTime*daysPerSecond/1000).toString()
 
 	prevTime = time;	
@@ -85,3 +107,6 @@ function redrawCanvas(time){
 	syncvariables()	
 	window.requestAnimationFrame(redrawCanvas);
 }
+
+//draw back orbits
+//draw objects
