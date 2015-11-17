@@ -75,6 +75,7 @@ function rotate(orbitPath){
 	return transformedPath;
 }
 
+<<<<<<< HEAD
 function project(orbitPath){
 	transformedPath = [];
 	for(point = 0; point < orbitPath.length; ++point){
@@ -82,3 +83,13 @@ function project(orbitPath){
 	}
 	return transformedPath;
 }
+=======
+function addPerspective(orbitPath){
+	transformedPath = [];
+	for(point = 0; point < orbitPath.length; ++point){
+		d = [orbitPath[point][0] - camera.x, orbitPath[point][1] - camera.y, orbitPath[point][2] - camera.z]
+		transformedPath.push([[camera.ez*d[0]/d[2] - camera.ex], [camera.ez*d[0]/d[1] - camera.ey]])
+	}
+	return orbitPath;
+}
+>>>>>>> origin/master
