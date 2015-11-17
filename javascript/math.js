@@ -6,8 +6,7 @@ function getPosition(orbit, days){
 	var inclination = orbit.inclination* RADS; 
 	var longitudeOfAscending = orbit.longitudeOfAscending * RADS; 
 	var longitudeOfPerigee = orbit.longitudeOfPerigee * RADS; 
-	var meanLongitude = mod2pi((orbit.meanLongitude + orbit.meanLongitudeCoef*cy/3600) * RADS); 
-	
+	var meanLongitude = mod2pi((orbit.meanLongitude + orbit.meanLongitudeCoef*cy/3600) * RADS); 	
 	var meanAnomaly = mod2pi(meanLongitude - longitudeOfPerigee);
 	var eccentricAnomalyApprox = meanAnomaly + eccentricity * Math.sin(meanAnomaly) * (1.0 + eccentricity * Math.cos(meanAnomaly));
 	var eccentricAnomaly = 0;
@@ -29,24 +28,21 @@ function getPosition(orbit, days){
 	return [x, y, z];
 }
 
-function mod2pi(x)
-{
+function mod2pi(x){
 	var b = x / (2 * Math.PI);
 	var a = (2 * Math.PI) * (b - abs_floor(b));
 	if (a < 0) a = (2 * Math.PI) + a;
 	return a;
 }
 
-function abs_floor(x)
-{
+function abs_floor(x){
 	var r;
 	if (x >= 0.0) r = Math.floor(x);
 	else r = Math.ceil(x);
 	return r;
 }
 
-function transform(orbit){
-
+function rotate(orbitPath){
 	var cosx = Math.cos(xr)
 	var cosy = Math.cos(yr)
 	var cosz = Math.cos(zr)
@@ -64,17 +60,25 @@ function transform(orbit){
 	var h = cosx*siny*sinz + cosz*sinx;
 	var i = cosx*cosy;
 
-	transformedCurve = []
+	transformedPath = []
 
-	for(point = 0; point < orbit.length; ++point){
-		x = orbit[point][0];
-		y = orbit[point][1];
-		z = orbit[point][2];
-		transformedCurve.push(
+	for(point = 0; point < orbitPath.length; ++point){
+		x = orbitPath[point][0];
+		y = orbitPath[point][1];
+		z = orbitPath[point][2];
+		transformedPath.push(
 		[x * a + y * b + z * c,
 		 x * d + y * e + z * f,
 		 x * g + y * h + z * i]);
 		 
 	}
-	return transformedCurve;
+	return transformedPath;
+}
+
+function project(orbitPath){
+	transformedPath = [];
+	for(point = 0; point < orbitPath.length; ++point){
+		transformedPath.push([orbitPath[point][0]*scale/(viewDistance+orbitPath[point][2]),orbitPath[point][1]*scale/(viewDistance+orbitPath[point][2])])
+	}
+	return transformedPath;
 }
