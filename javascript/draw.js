@@ -1,111 +1,151 @@
-function drawOrbit(orbitPath, colour){
-	midx = Math.floor((canvas.width)/2);
-	midy = Math.floor(canvas.height/2);
+jake
 
-	r = colour[0];
-	g = colour[1];
-	b = colour[2];
-	a = colour[3]/255;
 
-	transformedPath = project(rotate(orbitPath));
-		
-	var point = transformedPath.length - 1;
+Search Drive
 
-	ctx.strokeStyle="rgba("+r+","+g+","+b+","+a+")";
+Drive
+.
+Folder Path
+My Drive
+Computing
+server
+NEW 
+Folders and views
+My Drive
+Shared with me
+Google Photos
+Recent
+Starred
+Trash
+256 MB of 15 GB used
+Upgrade storage
+Name
+Owner
+Last modified
+File size
 
-	ctx.moveTo(transformedPath[point][0] + midx, transformedPath[point][1] + midy);	
-	ctx.beginPath();
+math.js
+me
+Dec 11, 2015me
+3 KB
 
-	ctx.lineTo(transformedPath[transformedPath.length - 1][0] + midx, transformedPath[transformedPath.length - 1][1] + midy)	
-	while(point--){
-		ctx.lineTo(transformedPath[point][0] + midx, transformedPath[point][1] + midy)
-	}
-	ctx.lineTo(transformedPath[transformedPath.length - 1][0] + midx, transformedPath[transformedPath.length - 1][1] + midy)
-	ctx.stroke();	
+index.html
+me
+Dec 11, 2015me
+802 bytes
+
+draw.js
+me
+Dec 11, 2015me
+3 KB
+
+dataflow.js
+me
+Dec 11, 2015me
+50 bytes
+
+app.js
+me
+Dec 11, 2015me
+5 KB
+
+app.css
+me
+Dec 11, 2015me
+2 KB
+Javascript
+draw.js
+Details
+Activity
+LAST WEEK
+j
+Youuploaded an item
+Fri 11:06 AM
+Javascript
+draw.js
+No recorded activity before December 11, 2015
+Get Drive for PC
+
+
+function drawOrbit(orbit, x, y, z) {
+  r = orbit.colour[0];
+  g = orbit.colour[1];
+  b = orbit.colour[2];
+  a = orbit.colour[3] / 255;
+  ctx.strokeStyle = "rgba(" + r + "," + g + "," + b + "," + a + ")";
+  midx = Math.floor((canvas.width) / 2);
+  midy = Math.floor(canvas.height / 2);  
+
+  transformedPath = project(rotate(translate(orbit.path, x, y, z)));
+
+  point = transformedPath.length - 1;  
+  
+  orbit.X = getPosition(orbit, date.getTime() / MSPERDAY)[0] - x - focusPlanet.X;
+  orbit.Y = getPosition(orbit, date.getTime() / MSPERDAY)[1] - y - focusPlanet.Y;
+  orbit.Z = getPosition(orbit, date.getTime() / MSPERDAY)[2] - z - focusPlanet.Z;
+
+  ctx.moveTo(transformedPath[point][0] + midx, transformedPath[point][1] + midy);
+  ctx.beginPath();
+  ctx.lineTo(transformedPath[transformedPath.length - 1][0] + midx, transformedPath[transformedPath.length - 1][1] + midy)
+  while (point--) {
+    ctx.lineTo(transformedPath[point][0] + midx, transformedPath[point][1] + midy)
+  }
+  ctx.lineTo(transformedPath[transformedPath.length - 1][0] + midx, transformedPath[transformedPath.length - 1][1] + midy)
+  ctx.stroke();
+
+  orbitRadius = 25;
+  actualPosition = translate([getPosition(orbit, date.getTime() / MSPERDAY)], x, y, z)[0];
+  rotatedPosition = rotate([actualPosition])[0];
+  centerOfPositionOnScreen = project([rotatedPosition])[0];
+  edgeOfScreenPositionOnScreen = project([[rotatedPosition[0] + orbitRadius, rotatedPosition[1], rotatedPosition[2]]])[0];
+  radius = Math.abs(centerOfPositionOnScreen[0] - edgeOfScreenPositionOnScreen[0]);
+  projectedPosition = project(rotate([actualPosition]));
+  
+  orbit.screenX = projectedPosition[0][0];
+  orbit.screenY = projectedPosition[0][1];
+
+  orbit.radius = 20 * radius / scale;
+  ctx.beginPath();
+  ctx.arc(projectedPosition[0][0] + midx, projectedPosition[0][1] + midy, orbit.radius, 0, 2 * Math.PI);
+  ctx.strokeStyle = "black";
+  ctx.stroke();
+  ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + a + ")";
+  ctx.fill();
+  drawText(orbit.tag,  projectedPosition[0][0] + midx + 15, projectedPosition[0][1] + midy - 5)
+
+  for (var i = 0; i < orbit.children.length; ++i) {
+    drawOrbit(planets[orbit.children[i]], actualPosition[0], actualPosition[1], actualPosition[2]);
+  }
 }
 
-function drawOrbit(orbitPath, colour){
-	midx = Math.floor((canvas.width)/2);
-	midy = Math.floor(canvas.height/2);
+function redrawCanvas(time) {
+  canvas.setAttribute("width", window.innerWidth - 250);
+  canvas.setAttribute("height", window.innerHeight);
 
-	r = colour[0];
-	g = colour[1];
-	b = colour[2];
-	a = colour[3]/255;
+  msStart = Date.now();
 
-	transformedPath = project(rotate(orbitPath));
-		
-	var point = transformedPath.length - 1;
+  prevFrameTime = time - prevTime;
+  fps = Math.round(1000 / (prevFrameTime));
+  drawText(fps + "fps", 10, 20)
 
-	ctx.strokeStyle="rgba("+r+","+g+","+b+","+a+")";
+  for (i = 0; i < selectedOrbits[0].children.length; ++i) {
+    origin = getPosition(focusPlanet, date.getTime() / MSPERDAY)
+    drawOrbit(planets[selectedOrbits[0].children[i]], -focusPlanet.X, -focusPlanet.Y, -focusPlanet.Z);
+  }
 
-	ctx.moveTo(transformedPath[point][0] + midx, transformedPath[point][1] + midy);	
-	ctx.beginPath();
+  //drawOrigin();
+  date.setTime(date.getTime() + prevFrameTime * daysPerSecond * 840000 / 1000)
 
-	ctx.lineTo(transformedPath[transformedPath.length - 1][0] + midx, transformedPath[transformedPath.length - 1][1] + midy)	
-	while(point--){
-		ctx.lineTo(transformedPath[point][0] + midx, transformedPath[point][1] + midy)
-	}
-	ctx.lineTo(transformedPath[transformedPath.length - 1][0] + midx, transformedPath[transformedPath.length - 1][1] + midy)
-	ctx.stroke();	
+  prevTime = time;
+  drawText((Date.now() - msStart) + "ms", 60, 20)
+  syncvariables();
+  window.requestAnimationFrame(redrawCanvas);
 }
 
-function drawObject(orbit){
-	midx = Math.floor((canvas.width)/2);
-	midy = Math.floor(canvas.height/2);
-	
-	r = orbit.colour[0]
-	g = orbit.colour[1]
-	b = orbit.colour[2]
-	a = orbit.colour[3]
-	
-	position = project(rotate([getPosition(orbit, date)]));
-	
-	ctx.beginPath();
-	ctx.arc(position[0][0] + midx, position[0][1] + midy, 10, 0, 2*Math.PI);
-	ctx.strokeStyle="black";
-	ctx.stroke();
-	
-	ctx.fillStyle="rgba("+r+","+g+","+b+","+a+")";
-	ctx.fill();
-
-}
-
-function drawOrigin(){
-	ctx.beginPath();
-	ctx.arc(midx, midy, 10, 0, 2*Math.PI);
-	ctx.strokeStyle="#FF6F17";
-	ctx.stroke();
-	
-	ctx.fillStyle="#FF6F17";
-	ctx.fill();
-}
-
-function redrawCanvas(time){
-	canvas.setAttribute("width", window.innerWidth - 250); 
-	canvas.setAttribute("height", window.innerHeight);
-	
-	msStart = Date.now();
-	
-	prevFrameTime = time - prevTime;
-	fps = Math.round(1000/(prevFrameTime));	
-	ctx.fillStyle = 'rgb(250,250,250)';
-    ctx.font = "10pt Courier";
-    ctx.fillText(fps+"fps", 10, 20);	
-
-	for (i = 0; i < selectedOrbits.length; ++i) {
-		drawOrbit(selectedOrbits[i].path, selectedOrbits[i].colour);
-		drawObject(selectedOrbits[i])
-	};
-	drawOrigin();
-	date = (parseFloat(date) + prevFrameTime*daysPerSecond/1000).toString()
-
-	prevTime = time;	
-	ctx.fillStyle = 'rgb(250,250,250)';
-    ctx.font = "10pt Courier";
-    ctx.fillText((Date.now() - msStart) + "ms", 60, 20);	
-	syncvariables()	
-	window.requestAnimationFrame(redrawCanvas);
+function drawText(text, x, y) {
+  ctx.fillStyle = 'rgb(250,250,250)';
+  ctx.font = "10pt Courier";
+  ctx.fillText(text, x, y);
 }
 
 //draw back orbits
