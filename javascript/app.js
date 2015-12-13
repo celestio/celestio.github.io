@@ -142,7 +142,7 @@ function initialisePage() {
 
 function syncvariables() {
   dateInput.value = date.toISOString();
-  scaleInput.value = scale | 0;
+  //scaleInput.value = scale | 0;
 }
 
 initialiseOrbits(planets.sun);
