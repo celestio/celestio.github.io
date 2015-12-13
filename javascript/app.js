@@ -4,7 +4,6 @@ var MSPERDAY = 840000
 var VIEWDISTANCE = 100
 
 var canvas = document.getElementById("map");
-var scaleInput = document.getElementById("scale");
 var dateInput = document.getElementById("date");
 var speedInput = document.getElementById("speed")
 var ctx = canvas.getContext("2d");
@@ -17,9 +16,6 @@ var mousedown = false;
 var scale = 600;
 var date = new Date();
 
-scaleInput.oninput = function() {
-  scale = scaleInput.value;
-}
 dateInput.oninput = function() {
   date.value = dateInput.value;
 }
